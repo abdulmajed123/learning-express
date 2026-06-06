@@ -10,8 +10,11 @@ import { profileRoute } from "./modules/profile/profile.route.js";
 import { authRoute } from "./modules/auth/auth.route.js";
 const app: Application = express();
 
+import logger from "./middleware/logger.js";
+
 app.use(express.json());
 app.use(express.text());
+app.use(logger);
 
 app.get("/", (req: Request, res: Response) => {
   // res.send("Hello World!");
