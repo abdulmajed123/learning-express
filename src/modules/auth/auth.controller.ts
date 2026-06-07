@@ -4,6 +4,12 @@ import { authService } from "./auth.service.js";
 const loginUser = async (req: Request, res: Response) => {
   try {
     const result = await authService.loginUserIntoDB(req.body);
+    const { refreshToken } = result;
+    res.cookie("refreshToken", refreshToken, {
+      secure: false, // In Production =>True
+      httpOnly: true,
+      sameSite: "lax",
+    });
     res.status(201).json({
       success: true,
       message: "Profile Create Successfully",
