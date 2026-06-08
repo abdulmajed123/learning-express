@@ -24,4 +24,23 @@ const loginUser = async (req: Request, res: Response) => {
   }
 };
 
-export const authController = { loginUser };
+const refreshToken = async (req: Request, res: Response) => {
+  // console.log(req.cookies);
+  try {
+    const result = await authService.generateFreshToken(
+      req.cookies.refreshToken,
+    );
+    res.status(200).json({
+      success: true,
+      message: "Access Token Generated!",
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      error: error,
+    });
+  }
+};
+export const authController = { loginUser, refreshToken };
